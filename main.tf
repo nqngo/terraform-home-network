@@ -26,4 +26,5 @@ module "site-george" {
   providers = {
     unifi = unifi.george
   }
+  domain = var.george_domain
 }
