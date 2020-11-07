@@ -13,21 +13,21 @@ variable "nets" {
     }
     mgmt = {
       vlan_id = 10
-      name = "Management"
+      name    = "Management"
     }
     storage = {
       vlan_id = 20
-      name = "Storage"
+      name    = "Storage"
     }
 
     iot = {
       vlan_id = 30
-      name = "IoT"
+      name    = "IoT"
     }
 
     guest = {
       vlan_id = 40
-      name = "Guest"
+      name    = "Guest"
     }
   }
 }

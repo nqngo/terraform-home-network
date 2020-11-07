@@ -35,4 +35,9 @@ terraform.rc
 
 # Ignore dev files
 *.env
+!example.env
 *.code-workspace
+
+# Ignore all data except example.csv
+modules/*/data/*
+!modules/*/data/example.csv
