@@ -46,3 +46,15 @@ resource "unifi_network" "iot" {
   dhcp_stop    = "192.168.100.254"
   dhcp_enabled = true
 }
+
+resource "unifi_network" "n3" {
+  name        = var.nets.n3.name
+  purpose     = "corporate"
+  domain_name = "3n.${var.domain}"
+
+  subnet       = "192.168.11.1/24"
+  vlan_id      = var.nets.n3.vlan_id
+  dhcp_start   = "192.168.11.5"
+  dhcp_stop    = "192.168.11.254"
+  dhcp_enabled = true
+}

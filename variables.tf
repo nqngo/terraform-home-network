@@ -9,3 +9,7 @@ variable "george_domain" {
 variable "neale_iot_passphrase" {
   type = string
 }
+
+variable "neale_n3_passphrase" {
+  type = string
+}

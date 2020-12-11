@@ -19,6 +19,7 @@ module "site-neale" {
   }
   domain         = var.neale_domain
   iot_passphrase = var.neale_iot_passphrase
+  n3_passphrase  = var.neale_n3_passphrase
 }
 
 module "site-george" {
