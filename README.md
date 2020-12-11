@@ -2,7 +2,7 @@
 
 My [Terraform](terraform.io)-managed Unifi home network as Infrastructure as Code. Feel free to clone this repo to use as base for your project.
 
-Please note that not all GUI functionality has been implemented yet, certain function . If you found any errors, feel free to create an issue.
+Please note that not all GUI functionality has been implemented yet. If you found any errors, feel free to create an issue.
 
 ## Usage Notes
 
