@@ -19,14 +19,26 @@ variable "nets" {
       vlan_id = 10
       name    = "Management"
     }
+    compute = {
+      vlan_id = 19
+      name    = "Compute"
+    }
     storage = {
       vlan_id = 20
       name    = "Storage"
     }
-
+    ceph = {
+      vlan_id = 21
+      name    = "Ceph"
+    }
     iot = {
       vlan_id = 30
       name    = "IoT"
+    }
+
+    n3 = {
+      vlan_id = 31
+      name    = "3 Neale"
     }
 
     guest = {
@@ -34,9 +46,5 @@ variable "nets" {
       name    = "Guest"
     }
 
-    n3 = {
-      vlan_id = 31
-      name    = "3 Neale"
-    }
   }
 }

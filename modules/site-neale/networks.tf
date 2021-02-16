@@ -17,10 +17,32 @@ resource "unifi_network" "mgmt" {
 
   subnet       = "192.168.2.1/24"
   vlan_id      = var.nets.mgmt.vlan_id
-  dhcp_start   = "192.168.2.150"
+  dhcp_start   = "192.168.2.200"
   dhcp_stop    = "192.168.2.254"
   dhcp_enabled = true
 
+}
+
+resource "unifi_network" "compute" {
+  name        = var.nets.compute.name
+  purpose     = "corporate"
+  domain_name = "compute.${var.domain}"
+
+  subnet       = "192.168.8.1/24"
+  vlan_id      = var.nets.compute.vlan_id
+  dhcp_start   = "192.168.8.30"
+  dhcp_stop    = "192.168.8.254"
+  dhcp_enabled = true
+}
+
+resource "unifi_network" "ceph" {
+  name        = var.nets.ceph.name
+  purpose     = "corporate"
+  domain_name = "ceph.${var.domain}"
+
+  subnet       = "192.168.9.1/24"
+  vlan_id      = var.nets.ceph.vlan_id
+  dhcp_enabled = false
 }
 
 resource "unifi_network" "storage" {
@@ -30,8 +52,18 @@ resource "unifi_network" "storage" {
 
   subnet       = "192.168.10.1/24"
   vlan_id      = var.nets.storage.vlan_id
-  dhcp_start   = "192.168.10.100"
-  dhcp_stop    = "192.168.10.254"
+  dhcp_enabled = false
+}
+
+resource "unifi_network" "n3" {
+  name        = var.nets.n3.name
+  purpose     = "corporate"
+  domain_name = "3n.${var.domain}"
+
+  subnet       = "192.168.11.1/24"
+  vlan_id      = var.nets.n3.vlan_id
+  dhcp_start   = "192.168.11.5"
+  dhcp_stop    = "192.168.11.254"
   dhcp_enabled = true
 }
 
@@ -47,14 +79,3 @@ resource "unifi_network" "iot" {
   dhcp_enabled = true
 }
 
-resource "unifi_network" "n3" {
-  name        = var.nets.n3.name
-  purpose     = "corporate"
-  domain_name = "3n.${var.domain}"
-
-  subnet       = "192.168.11.1/24"
-  vlan_id      = var.nets.n3.vlan_id
-  dhcp_start   = "192.168.11.5"
-  dhcp_stop    = "192.168.11.254"
-  dhcp_enabled = true
-}

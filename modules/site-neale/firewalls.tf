@@ -5,6 +5,13 @@ resource "unifi_firewall_group" "rfc1918" {
   members = ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16"]
 }
 
+resource "unifi_firewall_group" "local" {
+  name = "Local subnets"
+  type = "address-group"
+
+  members = ["192.168.4.0/22", "192.168.8.0/24", "192.168.10.0/24"]
+}
+
 resource "unifi_firewall_group" "allow_all_ports" {
   name = "Ports that are allowed on all subnet"
   type = "port-group"
@@ -19,6 +26,16 @@ resource "unifi_firewall_rule" "allow_on_all" {
   rule_index             = 2001
   protocol               = "all"
   dst_firewall_group_ids = [unifi_firewall_group.allow_all_ports.id]
+}
+
+resource "unifi_firewall_rule" "allow_local" {
+  name                   = "Allow traffics between hosts in the local subnets group"
+  action                 = "accept"
+  ruleset                = "LAN_IN"
+  rule_index             = 2995
+  protocol               = "all"
+  src_firewall_group_ids = [unifi_firewall_group.local.id]
+  dst_firewall_group_ids = [unifi_firewall_group.local.id]
 }
 
 resource "unifi_firewall_rule" "iot_to_general" {
