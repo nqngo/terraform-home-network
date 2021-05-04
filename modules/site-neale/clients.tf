@@ -18,3 +18,13 @@ module "lan_clients" {
   domain_name = unifi_network.lan.domain_name
   network_id  = unifi_network.lan.id
 }
+
+module "vm_clients" {
+  source = "./modules/users"
+  providers = {
+    unifi = unifi
+  }
+  csv_path    = "${path.module}/data/vm.csv"
+  domain_name = unifi_network.vm.domain_name
+  network_id  = unifi_network.vm.id
+}

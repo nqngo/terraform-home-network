@@ -5,12 +5,36 @@ resource "unifi_firewall_group" "rfc1918" {
   members = ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16"]
 }
 
-resource "unifi_firewall_group" "local" {
-  name = "Local subnets"
+resource "unifi_firewall_group" "admin" {
+  name = "Admin IPs"
   type = "address-group"
 
-  members = ["192.168.4.0/22", "192.168.8.0/24", "192.168.10.0/24"]
+  members = [
+    cidrsubnet(unifi_network.admin.subnet, 0, 0)
+  ]
 }
+
+resource "unifi_firewall_group" "local" {
+  name = "Local infrastructure subnets"
+  type = "address-group"
+
+  members = [
+    cidrsubnet(unifi_network.lan.subnet, 0, 0),
+    cidrsubnet(unifi_network.compute.subnet, 0, 0),
+    cidrsubnet(unifi_network.storage.subnet, 0, 0),
+    cidrsubnet(unifi_network.vm.subnet, 0, 0)
+  ]
+}
+
+resource "unifi_firewall_group" "public" {
+  name = "Publics subnets"
+  type = "address-group"
+
+  members = [
+    unifi_network.svc.subnet
+  ]
+}
+
 
 resource "unifi_firewall_group" "allow_all_ports" {
   name = "Ports that are allowed on all subnet"
@@ -26,6 +50,26 @@ resource "unifi_firewall_rule" "allow_on_all" {
   rule_index             = 2001
   protocol               = "all"
   dst_firewall_group_ids = [unifi_firewall_group.allow_all_ports.id]
+}
+
+resource "unifi_firewall_rule" "allow_ws" {
+  name                   = "Allow traffics to anything from admin workstation"
+  action                 = "accept"
+  ruleset                = "LAN_IN"
+  rule_index             = 2002
+  protocol               = "all"
+  src_firewall_group_ids = [unifi_firewall_group.admin.id]
+}
+
+resource "unifi_firewall_rule" "return_ws" {
+  name                   = "Enable related & established trafics back to admin workstation"
+  action                 = "accept"
+  ruleset                = "LAN_IN"
+  rule_index             = 2003
+  protocol               = "all"
+  dst_firewall_group_ids = [unifi_firewall_group.admin.id]
+  state_established      = true
+  state_related          = true
 }
 
 resource "unifi_firewall_rule" "allow_local" {
@@ -58,15 +102,6 @@ resource "unifi_firewall_rule" "general_to_iot" {
   protocol       = "all"
   src_network_id = unifi_network.lan.id
   dst_network_id = unifi_network.iot.id
-}
-
-resource "unifi_firewall_rule" "enable_dns" {
-  name        = "Enable access to DNS server"
-  action      = "accept"
-  ruleset     = "LAN_IN"
-  rule_index  = 2998
-  protocol    = "tcp"
-  dst_address = "192.168.0.254"
 }
 
 resource "unifi_firewall_rule" "block_vlan" {

@@ -15,21 +15,37 @@ variable "nets" {
     lan = {
       name = "General"
     }
+    admin = {
+      vlan_id = 2
+      name    = "Admin"
+    }
     mgmt = {
       vlan_id = 10
       name    = "Management"
     }
     compute = {
-      vlan_id = 19
+      vlan_id = 11
       name    = "Compute"
+    }
+    vm = {
+      vlan_id = 12
+      name    = "Virtual Machine"
+    }
+    svc = {
+      vlan_id = 13
+      name    = "Public Service"
+    }
+    sync = {
+      vlan_id = 19
+      name    = "Corosync"
     }
     storage = {
       vlan_id = 20
-      name    = "Storage"
+      name    = "Ceph Public"
     }
     ceph = {
       vlan_id = 21
-      name    = "Ceph"
+      name    = "Ceph Cluster"
     }
     iot = {
       vlan_id = 30

@@ -1,3 +1,15 @@
+resource "unifi_network" "admin" {
+  name        = var.nets.admin.name
+  purpose     = "corporate"
+  domain_name = "admin.${var.domain}"
+
+  subnet       = "192.168.3.1/24"
+  vlan_id      = var.nets.admin.vlan_id
+  dhcp_start   = "192.168.3.2"
+  dhcp_stop    = "192.168.3.254"
+  dhcp_enabled = true
+}
+
 resource "unifi_network" "lan" {
   name        = var.nets.lan.name
   purpose     = "corporate"
@@ -7,7 +19,6 @@ resource "unifi_network" "lan" {
   dhcp_start   = "192.168.5.0"
   dhcp_stop    = "192.168.7.254"
   dhcp_enabled = true
-
 }
 
 resource "unifi_network" "mgmt" {
@@ -20,7 +31,6 @@ resource "unifi_network" "mgmt" {
   dhcp_start   = "192.168.2.200"
   dhcp_stop    = "192.168.2.254"
   dhcp_enabled = true
-
 }
 
 resource "unifi_network" "compute" {
@@ -28,11 +38,43 @@ resource "unifi_network" "compute" {
   purpose     = "corporate"
   domain_name = "compute.${var.domain}"
 
-  subnet       = "192.168.8.1/24"
+  subnet       = "192.168.12.1/24"
   vlan_id      = var.nets.compute.vlan_id
-  dhcp_start   = "192.168.8.30"
-  dhcp_stop    = "192.168.8.254"
+  dhcp_start   = "192.168.12.100"
+  dhcp_stop    = "192.168.12.254"
   dhcp_enabled = true
+}
+
+resource "unifi_network" "vm" {
+  name        = var.nets.vm.name
+  purpose     = "corporate"
+  domain_name = "vm.${var.domain}"
+
+  subnet       = "192.168.13.1/24"
+  vlan_id      = var.nets.vm.vlan_id
+  dhcp_start   = "192.168.13.2"
+  dhcp_stop    = "192.168.13.254"
+  dhcp_enabled = true
+}
+
+resource "unifi_network" "svc" {
+  name        = var.nets.svc.name
+  purpose     = "corporate"
+  domain_name = "svc.${var.domain}"
+
+  subnet       = "192.168.14.1/24"
+  vlan_id      = var.nets.svc.vlan_id
+  dhcp_enabled = false
+}
+
+resource "unifi_network" "sync" {
+  name        = var.nets.sync.name
+  purpose     = "corporate"
+  domain_name = "sync.${var.domain}"
+
+  subnet       = "192.168.8.1/24"
+  vlan_id      = var.nets.sync.vlan_id
+  dhcp_enabled = false
 }
 
 resource "unifi_network" "ceph" {
@@ -48,7 +90,7 @@ resource "unifi_network" "ceph" {
 resource "unifi_network" "storage" {
   name        = var.nets.storage.name
   purpose     = "corporate"
-  domain_name = "stg.${var.domain}"
+  domain_name = "storage.${var.domain}"
 
   subnet       = "192.168.10.1/24"
   vlan_id      = var.nets.storage.vlan_id
@@ -78,4 +120,3 @@ resource "unifi_network" "iot" {
   dhcp_stop    = "192.168.100.254"
   dhcp_enabled = true
 }
-
