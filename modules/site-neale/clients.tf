@@ -1,4 +1,14 @@
 # Each VLAN is a submodule
+module "admin_clients" {
+  source = "./modules/users"
+  providers = {
+    unifi = unifi
+  }
+  csv_path    = "${path.module}/data/admin.csv"
+  domain_name = unifi_network.admin.domain_name
+  network_id  = unifi_network.admin.id
+}
+
 module "mgmt_clients" {
   source = "./modules/users"
   providers = {
