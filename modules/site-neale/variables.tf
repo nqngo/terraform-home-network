@@ -19,6 +19,10 @@ variable "nets" {
       vlan_id = 2
       name    = "Admin"
     }
+    maas = {
+      vlan_id = 3
+      name    = "MAAS Managed"
+    }
     mgmt = {
       vlan_id = 10
       name    = "Management"
