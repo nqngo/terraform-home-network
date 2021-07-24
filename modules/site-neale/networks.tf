@@ -12,12 +12,11 @@ resource "unifi_network" "admin" {
 
 resource "unifi_network" "maas" {
   name        = var.nets.maas.name
-  purpose     = "corporate"
+  purpose     = "vlan-only"
   domain_name = "maas.${var.domain}"
 
   subnet       = "192.168.30.0/24"
   vlan_id      = var.nets.maas.vlan_id
-  dhcp_enabled = false
 }
 
 resource "unifi_network" "lan" {
