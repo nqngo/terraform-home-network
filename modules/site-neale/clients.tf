@@ -29,12 +29,32 @@ module "lan_clients" {
   network_id  = unifi_network.lan.id
 }
 
-module "vm_clients" {
+module "protect_clients" {
   source = "./modules/users"
   providers = {
     unifi = unifi
   }
-  csv_path    = "${path.module}/data/vm.csv"
-  domain_name = unifi_network.vm.domain_name
-  network_id  = unifi_network.vm.id
+  csv_path    = "${path.module}/data/protect.csv"
+  domain_name = unifi_network.protect.domain_name
+  network_id  = unifi_network.protect.id
 }
+// module "compute_clients" {
+//   source = "./modules/users"
+//   providers = {
+//     unifi = unifi
+//   }
+//   csv_path    = "${path.module}/data/compute.csv"
+//   domain_name = unifi_network.compute.domain_name
+//   network_id  = unifi_network.compute.id
+// }
+
+
+// module "vm_clients" {
+//   source = "./modules/users"
+//   providers = {
+//     unifi = unifi
+//   }
+//   csv_path    = "${path.module}/data/vm.csv"
+//   domain_name = unifi_network.vm.domain_name
+//   network_id  = unifi_network.vm.id
+// }

@@ -20,20 +20,22 @@ resource "unifi_firewall_group" "local" {
 
   members = [
     cidrsubnet(unifi_network.lan.subnet, 0, 0),
-    cidrsubnet(unifi_network.compute.subnet, 0, 0),
-    cidrsubnet(unifi_network.storage.subnet, 0, 0),
-    cidrsubnet(unifi_network.vm.subnet, 0, 0)
+    cidrsubnet(unifi_network.protect.subnet, 0, 0),
   ]
 }
 
-resource "unifi_firewall_group" "public" {
-  name = "Publics subnets"
-  type = "address-group"
+    // cidrsubnet(unifi_network.compute.subnet, 0, 0),
+    // cidrsubnet(unifi_network.storage.subnet, 0, 0),
+    // cidrsubnet(unifi_network.vm.subnet, 0, 0)
 
-  members = [
-    unifi_network.svc.subnet
-  ]
-}
+// resource "unifi_firewall_group" "public" {
+//   name = "Publics subnets"
+//   type = "address-group"
+
+//   members = [
+//     unifi_network.svc.subnet
+//   ]
+// }
 
 
 resource "unifi_firewall_group" "allow_all_ports" {
